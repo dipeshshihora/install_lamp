@@ -1,0 +1,20 @@
+#generate csr file for rekey
+cd /etc/apache2/site-avilable/
+mkdir ssl
+cd ssl
+
+openssl req -new -newkey rsa:2048 -nodes -keyout yourdomain.key -out yourdomain.csr
+#fill all information
+
+#COPY csr file and past to rekey box in ssl provider
+/etc/apache2/site-avilable/default-ssl.conf
+change SSLCertificateFile path to /etc/apache2/site-avilable/ssl/yourdomain_main.csr //provided by ssl authority 
+change SSLCertificateKeyFile path to /etc/apache2/site-avilable/ssl/yourdomain.key
+
+SSLCertificateChainFile /etc/apache2/site-avilable/ssl/yourdomain_main.crt //provided by ssl autority
+
+sudo a2enmod ssl
+
+sudo a2ensite default-ssl.conf
+
+service apache2 restart
