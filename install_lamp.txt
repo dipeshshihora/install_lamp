@@ -2,9 +2,18 @@
 sudo apt-get -y install tasksel
 # Install LAMP
 sudo tasksel install lamp-server
+
+#aptitude failed error?
+sudo apt-get update
+
 # Install PHPMyAdmin
 sudo apt-get install phpmyadmin
 
+#if mysql version >= 5.7 and mysql only work with sudo then
+DROP USER 'root'@'localhost';
+CREATE USER 'root'@'%' IDENTIFIED BY '<password>';
+GRANT ALL PRIVILEGES ON . TO 'root'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 
 # Set group to www-data
 sudo chgrp www-data /var/www/html
@@ -18,15 +27,24 @@ sudo usermod -a -G www-data username
 sudo chown username /var/www/html
 # Your account shouldn't have any more permission issues
 
-Install Curl
+#Install Curl for PHP5 
 sudo apt-get install php5-curl
 
-Install Mycrypt
+#Install Curl for > php5
+sudo apt-get install php-curl
+
+#Install Mycrypt for PHP5
 sudo apt-get install php5-mcrypt
 
-Activate Mcrypt
-# Enable extension
+#Install Mycrypt > PHP5
+sudo apt-get install php-mcrypt
+
+#Activate Mcrypt For PHP5
 sudo php5enmod mcrypt
+
+#Activate Mcrypt > PHP5
+sudo phpenmod mcrypt
+
 # Restart Apache
 sudo service apache2 reload
 
