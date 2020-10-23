@@ -61,35 +61,17 @@ curl -sS https://getcomposer.org/installer | sudo php
 
 sudo mv composer.phar /usr/local/bin/composer
 
-Install Laravel
-# your-project is your destination folder
-cd /var/www/
-composer create-project laravel/laravel your-project --prefer-dist
-
-Set up your Apache virtual host
-
-# Copy default Apache conf
-sudo cp /etc/apache2/sites-available/000-default /etc/apache2/sites-available/laravel.conf
-# Edit laravel.conf and change DocumentRoot to /var/www/laravel/public
-sudo nano /etc/apache2/sites-available/laravel.conf
-# Edit laravel.conf add the following and save.
-DocumentRoot /var/www/laravel/public
-<Directory /var/www/laravel/public>
- Options Indexes FollowSymLinks MultiViews
- AllowOverride All
- Order allow,deny
- allow from all
-</Directory>
-# Reload Apache
-sudo service apache2 reload
-# Disable default Apache conf
-sudo a2dissite 000-default.conf
-# Enable laravel.conf
-sudo a2ensite laravel.conf
-# Reload Apache
-sudo service apache reload
-
-
 sudo nano /etc/mysql/my.cnf
 [mysqld]
 sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
+
+How To Add Swap Space
+
+sudo fallocate -l 2G /swapfile
+ls -lh /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo cp /etc/fstab /etc/fstab.bak
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
